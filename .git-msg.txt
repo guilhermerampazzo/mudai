@@ -1,30 +1,9 @@
-Contas, limites, notificações e escrita natural
+Corrige fotos do catálogo e reduz o peso
 
-App:
-- App funciona sem conta. Cadastrar planta, usar o Hachimi e identificar por foto
-  pedem conta; o resto (catálogo, fichas, medidor, sol) segue livre
-- Conta sem senha: código de 6 dígitos por e-mail
-- Catálogo começa vazio; as plantas que vinham de exemplo saíram
-- Lembretes de rega agendados no aparelho, no ritmo de cada planta, com tela
-  para ativar a permissão
-- Botão de voltar do Android navega dentro do app em vez de fechar
-- Ícone do app com a marca 30% menor, com respiro verde na borda
-- Identificar mostra os candidatos com a confiança e deixa o usuário trocar,
-  em vez de cravar um nome só
-
-API:
-- Contas, verificação por e-mail via Resend e limites de uso
-  (chat 10/dia e 50/semana, visão 20/semana)
-- Identificação em duas etapas: primeiro os candidatos, depois a ficha.
-  A resposta parou de estourar o limite de tokens
-- Foto redimensionada com sharp antes de ir para a IA (antes o corte no
-  base64 corrompia a imagem e algumas identificações falhavam)
-- Prompt de identificação com as confusões comuns (jiboia x filodentro,
-  ficus, monstera) e confiança honesta
-- Textos da IA seguem guia de escrita natural adaptado do skill humanizer
-
-Catálogo:
-- Cuidados reescritos com variação real: 94 blocos distintos em vez de um
-  único repetido em 189 plantas
-- Duas fotos que não eram de planta (um placeholder "No Image" e um mapa de
-  distribuição) trocadas por fotografias
+- Foto da jiboia trocada: a anterior era verde uniforme, sem a mancha
+  amarela da espécie, o que fazia o identificador confundir com
+  filodentro-coração (e estava certo em confundir, pela foto)
+- Fotos que não eram de planta trocadas: um placeholder "No Image" na
+  orquídea e um mapa de distribuição no paphiopedilum
+- 68 fotos acima de 260 KB reduzidas para 900px: 47 MB viraram 35 MB
+  no pacote, sem perda visível no app
