@@ -1,9 +1,0 @@
-Corrige fotos do catálogo e reduz o peso
-
-- Foto da jiboia trocada: a anterior era verde uniforme, sem a mancha
-  amarela da espécie, o que fazia o identificador confundir com
-  filodentro-coração (e estava certo em confundir, pela foto)
-- Fotos que não eram de planta trocadas: um placeholder "No Image" na
-  orquídea e um mapa de distribuição no paphiopedilum
-- 68 fotos acima de 260 KB reduzidas para 900px: 47 MB viraram 35 MB
-  no pacote, sem perda visível no app
