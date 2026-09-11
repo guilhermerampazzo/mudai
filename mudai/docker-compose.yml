@@ -1,0 +1,43 @@
+name: mudai
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-mudai}
+      POSTGRES_USER: ${DB_USER:-mudai}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-trocar}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [appnet]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-mudai}"], interval: 10s, retries: 5 }
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes: [redisdata:/data]
+    networks: [appnet]
+
+  api:
+    build: { context: ., dockerfile: docker/api/Dockerfile }
+    restart: unless-stopped
+    env_file: [.env]
+    depends_on: { db: { condition: service_healthy }, redis: { condition: service_started } }
+    volumes: [storage:/data/storage]
+    networks: [appnet]
+
+  web:
+    build: { context: ., dockerfile: docker/web/Dockerfile }
+    restart: unless-stopped
+    depends_on: [api]
+    networks: [appnet]
+
+  gateway:
+    build: { context: ./docker/gateway }
+    restart: unless-stopped
+    depends_on: [web, api]
+    ports: ["127.0.0.1:${GATEWAY_PORT:-10233}:80"]
+    networks: [appnet]
+
+networks: { appnet: { driver: bridge } }
+volumes: { pgdata: {}, redisdata: {}, storage: {} }

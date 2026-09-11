@@ -1,0 +1,42 @@
+# Segredos — nunca commitar
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Dependências
+node_modules/
+
+# Builds
+dist/
+build/
+.next/
+out/
+
+# Android (gerado)
+mudai/app/android/.gradle/
+mudai/app/android/build/
+mudai/app/android/app/build/
+mudai/app/android/local.properties
+mudai/app/android/app/src/main/assets/public/
+mudai/app/android/app/src/main/res/xml/config.xml
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Ambiente Android local (JDK + SDK baixados nesta máquina)
+env-android/
+
+# Ferramentas locais do agente
+.commandcode/
+
+# Entregáveis e temporários
+mudai/entrega/
+mudai/server/storage-dev/
+mudai/server/*.log
+
+# Sistema
+Thumbs.db
+.DS_Store

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mudaí — Medidor de luz</title>
+<link rel="stylesheet" href="src/styles.css">
+<style>
+  .lux-hero { background: linear-gradient(150deg,var(--green-950),var(--green-700)); border-radius: var(--r-lg); padding: 26px 20px; color: #fff; text-align: center; }
+  .lux-hero .val { font-size: 64px; font-weight: 800; line-height: 1; }
+  .lux-hero .unit { font-size: 18px; font-weight: 700; color: var(--mustard-soft); }
+  .stat4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .stat4 .card { padding: 12px 6px; text-align: center; }
+  .stat4 b { font-size: 15px; display: block; }
+  .stat4 span { font-size: 10.5px; color: var(--muted); font-weight: 700; }
+  .spark { display: flex; align-items: flex-end; gap: 4px; height: 64px; margin-top: 14px; }
+  .spark i { flex: 1; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg,var(--mustard),#f6df9e); min-height: 6px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="screen">
+    <div class="topbar"><div class="grow"><h2>Medidor de luz</h2><p class="small">Aponte p/ onde a planta fica</p></div>
+      <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span></div>
+    <div class="pad" style="padding-top:10px">
+      <div class="row" style="margin-bottom:12px">
+        <span class="chip active">🌿 Na planta (frontal)</span>
+        <span class="chip">🏠 Ambiente (traseira)</span>
+      </div>
+      <div class="lux-hero">
+        <p style="color:rgba(255,255,255,.7);font-size:12px;font-weight:800">AGORA · NA JUJU</p>
+        <div class="val">2.400</div>
+        <div class="unit">lux</div>
+        <span class="chip sun" style="margin-top:12px">☀️ Ótimo p/ meia-sombra</span>
+      </div>
+      <div class="stat4">
+        <div class="card"><b>3.100</b><span>PICO</span></div>
+        <div class="card"><b>3.100</b><span>MÁX</span></div>
+        <div class="card"><b>180</b><span>MÍN</span></div>
+        <div class="card"><b>2.150</b><span>MÉDIA</span></div>
+      </div>
+      <div class="card" style="padding:16px;margin-top:12px">
+        <h3>Últimos 30 segundos</h3>
+        <div class="spark">
+          <i style="height:20%"></i><i style="height:28%"></i><i style="height:35%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:64%"></i><i style="height:76%"></i><i style="height:92%"></i><i style="height:58%"></i><i style="height:66%"></i><i style="height:74%"></i>
+        </div>
+      </div>
+      <div class="card" style="padding:16px;margin-top:12px">
+        <b style="font-size:14px">🌱 Diagnóstico p/ seus pets</b>
+        <p style="margin-top:6px">☀️ <b style="color:var(--ink)">Juju (jiboia)</b> — perfeito aqui.<br>🌑 <b style="color:var(--ink)">Gordinha (suculenta)</b> — fraco p/ ela, aproxime da janela.</p>
+        <button class="btn btn-primary btn-block" style="margin-top:12px">Salvar leitura na Juju</button>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-ghost grow">❄️ Congelar</button>
+        <button class="btn btn-ghost grow">↺ Reiniciar</button>
+      </div>
+    </div>
+  </div>
+  <nav class="tabbar">
+    <a href="02-descobrir.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 01-2 2h-4v-6h-6v6H5a2 2 0 01-2-2z"/></svg></a>
+    <a href="05-medidor.html" class="active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></a>
+    <a href="06-identificar.html"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></a>
+    <a href="07-chat.html"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg></a>
+    <a href="08-sol.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4 1 2-5z"/></svg></a>
+  </nav>
+</div>
+</body>
+</html>

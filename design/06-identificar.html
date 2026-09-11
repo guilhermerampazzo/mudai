@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mudaí — Identificar</title>
+<link rel="stylesheet" href="src/styles.css">
+<style>
+  .viewfinder { border-radius: var(--r-lg); overflow: hidden; position: relative; height: 340px;
+    background: linear-gradient(150deg,#d8f3dc,#95d5b2); border: 1.5px solid var(--line); }
+  .viewfinder img { width: 100%; height: 100%; object-fit: contain; padding: 20px; }
+  .corner { position: absolute; width: 30px; height: 30px; border: 4px solid #fff; }
+  .c-tl { top: 14px; left: 14px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+  .c-tr { top: 14px; right: 14px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+  .c-bl { bottom: 14px; left: 14px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+  .c-br { bottom: 14px; right: 14px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="screen">
+    <div class="topbar"><div class="grow"><h2>Identificar</h2><p class="small">Foto → ficha completa na hora</p></div></div>
+    <div class="pad" style="padding-top:10px">
+      <div class="viewfinder">
+        <img src="src/plants/costela.svg" alt="Prévia">
+        <span class="corner c-tl"></span><span class="corner c-tr"></span>
+        <span class="corner c-bl"></span><span class="corner c-br"></span>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn btn-primary grow">📷 Tirar foto</button>
+        <button class="btn btn-ghost grow">🖼️ Galeria</button>
+      </div>
+
+      <div class="card" style="padding:16px;margin-top:14px">
+        <div class="row">
+          <img src="src/plants/costela.svg" style="width:56px;height:56px;object-fit:contain;background:var(--green-50);border-radius:14px" alt="">
+          <div class="grow"><p class="small" style="font-weight:800;color:var(--green-700)">✔ IDENTIFICADA · 96%</p>
+            <b style="font-size:16px">Costela-de-adão</b><p class="small"><i>Monstera deliciosa</i></p></div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <span class="chip mint">🌤️ Meia-sombra</span><span class="chip">💧 Moderada</span>
+        </div>
+        <div class="gauge" style="margin-top:12px"><div class="gauge-track" style="background:linear-gradient(90deg,#5a6b62,#f6df9e,#e9b44c)"><div class="gauge-marker" style="left:38%"></div></div></div>
+        <p class="small" style="margin-top:6px">Luz indireta forte · água a cada 6 dias · 18–30°</p>
+        <p class="small" style="margin-top:8px">💾 Já estava no cache — nenhum token gasto.</p>
+        <div class="row" style="margin-top:12px">
+          <button class="btn btn-primary grow">Ver ficha completa</button>
+          <button class="btn btn-ghost grow">🌱 Adotar</button>
+        </div>
+      </div>
+
+      <div class="card" style="padding:16px;margin-top:12px">
+        <b style="font-size:14px">Não tem certeza?</b>
+        <p class="small">Top 3 candidatas p/ você escolher:</p>
+        <div class="row" style="margin-top:10px">
+          <span class="chip active">Costela 96%</span><span class="chip">Filodendro 71%</span><span class="chip">Jiboia 40%</span>
+        </div>
+      </div>
+      <div style="height:10px"></div>
+    </div>
+  </div>
+  <nav class="tabbar">
+    <a href="02-descobrir.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 01-2 2h-4v-6h-6v6H5a2 2 0 01-2-2z"/></svg></a>
+    <a href="05-medidor.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></a>
+    <a href="06-identificar.html" class="active"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></a>
+    <a href="07-chat.html"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg></a>
+    <a href="08-sol.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4 1 2-5z"/></svg></a>
+  </nav>
+</div>
+</body>
+</html>

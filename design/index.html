@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mudaí — Todas as telas</title>
+<link rel="stylesheet" href="src/styles.css">
+<style>
+  body { display: block; padding: 40px 24px; }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .grid { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 28px; }
+  .item { text-align: center; }
+  .item iframe { width: 390px; height: 844px; border: none; border-radius: 48px; box-shadow: var(--shadow); background: var(--cream); }
+  .item b { display: block; margin-top: 12px; font-size: 15px; }
+  .item span { font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Mudaí — todas as telas</h1>
+  <p>Abra qualquer tela em nova aba p/ ver em tamanho real. Estilo: minimalismo botânico da referência — verde profundo, creme, mostarda, cards arredondados, tabbar verde.</p>
+  <div class="grid">
+    <div class="item"><iframe src="01-onboarding.html" loading="lazy"></iframe><b>01 · Boas-vindas</b><span>onboarding / entrada</span></div>
+    <div class="item"><iframe src="02-descobrir.html" loading="lazy"></iframe><b>02 · Descobrir</b><span>módulo 1 · grid + filtros + tabbar</span></div>
+    <div class="item"><iframe src="03-ficha-planta.html" loading="lazy"></iframe><b>03 · Ficha da planta</b><span>módulo 1 · gráficos água/sol, cuidados</span></div>
+    <div class="item"><iframe src="04-pets.html" loading="lazy"></iframe><b>04 · Meus pets</b><span>módulo 6 · lista + anéis de saúde</span></div>
+    <div class="item"><iframe src="04b-pet-detalhe.html" loading="lazy"></iframe><b>04b · Detalhe do pet</b><span>módulo 6 · Juju, score, ações</span></div>
+    <div class="item"><iframe src="05-medidor.html" loading="lazy"></iframe><b>05 · Medidor de luz</b><span>módulo 2 · lux, pico/máx/mín/média</span></div>
+    <div class="item"><iframe src="06-identificar.html" loading="lazy"></iframe><b>06 · Identificar</b><span>módulo 3 · foto → ficha + cache</span></div>
+    <div class="item"><iframe src="07-chat.html" loading="lazy"></iframe><b>07 · Hachimi</b><span>módulo 4 · chat do jardineiro</span></div>
+    <div class="item"><iframe src="08-sol.html" loading="lazy"></iframe><b>08 · Posição do sol</b><span>módulo 5 · bússola + arco do dia</span></div>
+    <div class="item"><iframe src="09-novo-pet.html" loading="lazy"></iframe><b>09 · Novo pet</b><span>módulo 6 · adotar planta</span></div>
+  </div>
+  <p style="margin-top:28px">Ilustrações em <code>src/plants/*.svg</code> — 8 espécies no mesmo traço (vaso creme + faixa mostarda). Para novas espécies, duplique um SVG e troque só a copa.</p>
+</div>
+</body>
+</html>

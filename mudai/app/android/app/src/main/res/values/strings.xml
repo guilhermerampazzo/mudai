@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mudai</string>
+    <string name="title_activity_main">Mudai</string>
+    <string name="package_name">br.com.mudai.app</string>
+    <string name="custom_url_scheme">br.com.mudai.app</string>
+</resources>

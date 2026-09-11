@@ -1,0 +1,19 @@
+Mudaí: MVP do app de plantas com IA
+
+App Android (React + Capacitor) e API Node com:
+
+- Catálogo de 200 plantas de casa, cada uma com foto real local (sem hotlink),
+  tags de luz/água/dificuldade e ficha com gráficos em vez de texto puro
+- Medidor de lux pelo sensor real do aparelho, com plugin nativo Android
+  (LightSensorPlugin) e fallback de demonstração
+- Identificação por foto com IA, cache por hash da imagem e ficha no mesmo
+  contrato do catálogo
+- Chat "Hachimi, o jardineiro": persona restrita a plantas e luz
+- Bússola solar com GPS real (suncalc + giroscópio), azimute e elevação
+- Pets com score de saúde calculado de luz, rega e clima
+
+Infra em Docker Compose com uma única porta externa (127.0.0.1:10233):
+gateway nginx roteia / para o web, /api/ e /uploads/ para a API.
+
+IA por camada compatível com OpenAI (baseURL + key + modelo por env), com
+fallback de modelo. Nenhum segredo versionado: .env fica fora do repositório.

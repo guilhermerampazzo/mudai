@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mudaí — Hachimi</title>
+<link rel="stylesheet" href="src/styles.css">
+<style>
+  .hachi { background: linear-gradient(120deg,var(--green-900),var(--green-700)); border-radius: var(--r-md); padding: 16px; color: #fff; }
+  .hachi .face { width: 52px; height: 52px; border-radius: 50%; background: var(--mustard);
+    display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .chat { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+  .composer { display: flex; gap: 8px; margin: 12px 16px 12px; }
+  .composer input { flex: 1; font-family: var(--font); font-size: 14px; border: 1.5px solid var(--line);
+    border-radius: 999px; padding: 13px 18px; outline: none; }
+  .composer button { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--green-900); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .composer button svg { width: 20px; height: 20px; stroke: #fff; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="screen">
+    <div class="topbar"><div class="grow"><h2>Hachimi</h2><p class="small">🟢 o jardineiro · só manja de planta</p></div>
+      <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span></div>
+    <div class="pad" style="padding-top:10px">
+      <div class="hachi row">
+        <div class="face">🌿</div>
+        <div><b style="font-size:15px">Hachimi, o jardineiro</b>
+          <p style="color:rgba(255,255,255,.8);font-size:12.5px">Lembrei dos seus pets: Juju, Gordinha e Zazá. Pode perguntar!</p></div>
+      </div>
+      <div class="chat">
+        <div class="bubble user">Hachimi, minha jiboia tá com a ponta marrom. O que faço?</div>
+        <div class="bubble bot">Ponta marrom na jiboia é quase sempre <b>ar seco ou sede acumulada</b>. Faz o teste do dedo: enfia 2 cm no solo — se sair seco, rega generosa até escorrer. Borrifa as folhas 2x na semana que ela agradece. A Juju tá em meia-sombra boa, então não é sol. Corta a pontinha seca com tesoura limpa e observa os brotos novos. 🌱</div>
+        <div class="bubble user">E posso trocar ela de vaso agora?</div>
+        <div class="bubble bot">Pode, e ela vai amar. Escolhe um vaso 2 dedos maior, com furo embaixo. Substrato aerado — mistura terra vegetal com um punhado de perlita. Depois da troca, rega bem e deixa 3 dias sem sol direto. Me marca aqui quando fizer que eu te lembro da próxima rega. 💧</div>
+      </div>
+      <div class="row" style="margin-top:12px;overflow-x:auto">
+        <span class="chip">💧 Quando regar?</span><span class="chip">☀️ Minha planta pega sol?</span><span class="chip">🌱 Como adubar?</span>
+      </div>
+    </div>
+  </div>
+  <div class="composer">
+    <input placeholder="Pergunte ao Hachimi…">
+    <button><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button>
+  </div>
+  <nav class="tabbar">
+    <a href="02-descobrir.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 01-2 2h-4v-6h-6v6H5a2 2 0 01-2-2z"/></svg></a>
+    <a href="05-medidor.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></a>
+    <a href="06-identificar.html"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></a>
+    <a href="07-chat.html" class="active"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg></a>
+    <a href="08-sol.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4 1 2-5z"/></svg></a>
+  </nav>
+</div>
+</body>
+</html>
