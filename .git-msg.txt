@@ -1,19 +1,24 @@
-Mudaí: MVP do app de plantas com IA
+Catálogo dinâmico, painel de plantas e IA em produção
 
-App Android (React + Capacitor) e API Node com:
+Servidor:
+- Catálogo de plantas em JSON persistido no volume (semeado com as 200 do app)
+- GET /api/v1/catalogo serve o catálogo; o app sincroniza e cacheia localmente
+- Painel /admin no próprio app web: cadastrar, editar e remover plantas com
+  upload de foto, protegido por ADMIN_TOKEN
+- Identificação por IA agora grava a planta no catálogo (dedup por nome
+  científico), servindo de cache e enriquecendo a base
+- Chat do Hachimi recebe o catálogo como contexto (cita faixas reais de lux)
+- Cache de identificação persistido em disco
+- Prisma e Postgres/Redis removidos: nada no código usava (stack mais leve
+  para a VPS)
 
-- Catálogo de 200 plantas de casa, cada uma com foto real local (sem hotlink),
-  tags de luz/água/dificuldade e ficha com gráficos em vez de texto puro
-- Medidor de lux pelo sensor real do aparelho, com plugin nativo Android
-  (LightSensorPlugin) e fallback de demonstração
-- Identificação por foto com IA, cache por hash da imagem e ficha no mesmo
-  contrato do catálogo
-- Chat "Hachimi, o jardineiro": persona restrita a plantas e luz
-- Bússola solar com GPS real (suncalc + giroscópio), azimute e elevação
-- Pets com score de saúde calculado de luz, rega e clima
+Infra:
+- Compose reduzido a api + web + gateway, uma porta externa (10233)
+- Gateway passa / para o container web (antes servia um nginx vazio)
+- Dockerfiles corrigidos para o contexto do build
+- Seed do catálogo incluído no build da API
 
-Infra em Docker Compose com uma única porta externa (127.0.0.1:10233):
-gateway nginx roteia / para o web, /api/ e /uploads/ para a API.
-
-IA por camada compatível com OpenAI (baseURL + key + modelo por env), com
-fallback de modelo. Nenhum segredo versionado: .env fica fora do repositório.
+App:
+- Consome o catálogo do servidor com fallback para o catálogo embutido
+- Fotos resolvidas por origem (empacotadas ou enviadas ao servidor)
+- Aponta para https://mudai.codermaster.com.br em produção

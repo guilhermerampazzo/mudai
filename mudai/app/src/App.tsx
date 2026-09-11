@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { HashRouter, Link, Route, Routes, useNavigate } from "react-router-dom";
 import "./styles.css";
+import { CatalogoProvider } from "./lib/catalogo";
 import { Descobrir } from "./pages/Descobrir";
 import { FichaPlanta } from "./pages/FichaPlanta";
 import { Pets } from "./pages/Pets";
@@ -10,6 +11,7 @@ import { Medidor } from "./pages/Medidor";
 import { Identificar } from "./pages/Identificar";
 import { Chat } from "./pages/Chat";
 import { Sol } from "./pages/Sol";
+import { Admin } from "./pages/Admin";
 
 function Onboarding() {
   const nav = useNavigate();
@@ -18,13 +20,13 @@ function Onboarding() {
       <div className="screen">
         <div style={{ position: "relative", height: 400, overflow: "hidden", background: "var(--green-900)" }}>
           <img
-            src="/plantas/monstera-deliciosa.jpg"
+            src="plantas/monstera-deliciosa.jpg"
             alt=""
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(27,67,50,.15) 0%, rgba(27,67,50,.7) 62%, var(--green-900) 100%)" }} />
           <img
-            src="/icone-app.png"
+            src="icone-app.png"
             alt="Mudaí"
             style={{ position: "absolute", left: 24, top: "calc(28px + env(safe-area-inset-top))", width: 76, height: 76, borderRadius: 22 }}
           />
@@ -49,23 +51,26 @@ function Onboarding() {
 
 export default function App() {
   const [tick, setTick] = useState(0);
-  const refresh = () => setTick((t) => t + 1);
-  void tick;
+  const refresh = useMemo(() => () => setTick((t) => t + 1), []);
+
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/bem-vindo" element={<Onboarding />} />
-        <Route path="/" element={<Descobrir />} />
-        <Route path="/planta/:slug" element={<FichaPlanta />} />
-        <Route path="/pets" element={<Pets key={tick} onChange={refresh} />} />
-        <Route path="/pets/novo" element={<NovoPetWrapper onAdotar={refresh} />} />
-        <Route path="/pets/:id" element={<PetDetalhe onChange={refresh} />} />
-        <Route path="/medidor" element={<Medidor onSalvar={refresh} />} />
-        <Route path="/identificar" element={<Identificar />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/sol" element={<Sol />} />
-      </Routes>
-    </HashRouter>
+    <CatalogoProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/bem-vindo" element={<Onboarding />} />
+          <Route path="/" element={<Descobrir />} />
+          <Route path="/planta/:slug" element={<FichaPlanta />} />
+          <Route path="/pets" element={<Pets key={tick} onChange={refresh} />} />
+          <Route path="/pets/novo" element={<NovoPetWrapper onAdotar={refresh} />} />
+          <Route path="/pets/:id" element={<PetDetalhe onChange={refresh} />} />
+          <Route path="/medidor" element={<Medidor onSalvar={refresh} />} />
+          <Route path="/identificar" element={<Identificar />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/sol" element={<Sol />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </HashRouter>
+    </CatalogoProvider>
   );
 }
 

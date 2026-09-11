@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { buscarTodas, fotoPlanta } from "../data/plantasIndex";
+import { fotoPlanta } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { carregarPets, scoreSaude, estadoPet, salvarPets } from "../lib/pets";
 import { Tabbar, Topbar, IconBtn, HealthRing } from "../components/ui";
 import { Icons } from "../components/icons";
 
 export function Pets({ onChange }: { onChange?: () => void }) {
-  const pets = useMemo(() => carregarPets(buscarTodas), []);
+  const { buscar } = useCatalogo();
+  const pets = useMemo(() => carregarPets(buscar), [buscar]);
   const regarHoje = pets.filter((p) => p.ultimaRegaDias >= p.planta.aguaFreqDias[1]).length;
 
   const marcarRega = (id: string) => {

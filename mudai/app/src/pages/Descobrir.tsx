@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { TODAS_PLANTAS, TAG_FILTROS, filtrarTodas, fotoPlanta } from "../data/plantasIndex";
+import { TAG_FILTROS, fotoPlanta } from "../data/plantasIndex";
+import { filtrarPorTag, useCatalogo } from "../lib/catalogo";
 import { Tabbar, Topbar, IconBtn } from "../components/ui";
 import { Icons } from "../components/icons";
 
 export function Descobrir() {
+  const { plantas, origem, carregando, erro } = useCatalogo();
   const [filtro, setFiltro] = useState<string>("Todas");
   const [busca, setBusca] = useState("");
-  const lista = filtrarTodas(filtro).filter(
+  const lista = filtrarPorTag(plantas, filtro).filter(
     (p) =>
       p.nomePopular.toLowerCase().includes(busca.toLowerCase()) ||
       p.nomeCientifico.toLowerCase().includes(busca.toLowerCase())
@@ -17,8 +19,16 @@ export function Descobrir() {
       <div className="screen">
         <Topbar
           titulo="Descobrir"
-          subtitulo={`${TODAS_PLANTAS.length} verdinhas para chamar de sua`}
-          acao={<Link to="/pets"><IconBtn label="Meus pets"><Icons.Folha /></IconBtn></Link>}
+          subtitulo={
+            carregando
+              ? "Sincronizando catálogo…"
+              : `${plantas.length} verdinhas${origem === "servidor" ? " atualizadas do servidor" : ""}${erro ? " · offline" : ""}`
+          }
+          acao={
+            <Link to="/pets" aria-label="Meus pets">
+              <IconBtn label="Meus pets"><Icons.Folha /></IconBtn>
+            </Link>
+          }
         />
         <div className="pad" style={{ paddingTop: 10 }}>
           <div className="search">

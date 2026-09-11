@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { buscarTodas, TODAS_PLANTAS } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { carregarPets } from "../lib/pets";
 import { chatServidor, servidorConfigurado } from "../lib/api";
 import { Tabbar, Topbar } from "../components/ui";
@@ -14,7 +14,8 @@ const FORA = [
 ];
 
 export function Chat() {
-  const pets = useMemo(() => carregarPets(buscarTodas), []);
+  const { plantas, buscar } = useCatalogo();
+  const pets = useMemo(() => carregarPets(buscar), [buscar]);
   const [msgs, setMsgs] = useState<Msg[]>([
     { role: "bot", texto: `Opa, cheguei. Sou o Hachimi, o jardineiro. Vi aqui seus pets: ${pets.map((p) => p.apelido).join(", ")}. Pode perguntar de rega, luz, sol, vaso — coisa de planta.` },
   ]);
@@ -50,7 +51,7 @@ export function Chat() {
 
   const responder = (q: string): string => {
     const t = q.toLowerCase();
-    const planta = TODAS_PLANTAS.find(
+    const planta = plantas.find(
       (p) => t.includes(p.nomePopular.toLowerCase()) || t.includes(p.nomeCientifico.toLowerCase())
     );
     const pet = pets.find((p) => t.includes(p.apelido.toLowerCase()));

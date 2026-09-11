@@ -3,7 +3,7 @@ import * as SunCalc from "suncalc";
 import { Capacitor } from "@capacitor/core";
 import { Geolocation } from "@capacitor/geolocation";
 import { Motion } from "@capacitor/motion";
-import { buscarTodas } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { carregarPets } from "../lib/pets";
 import { Tabbar, Topbar, IconBtn } from "../components/ui";
 import { Icons } from "../components/icons";
@@ -15,7 +15,8 @@ function graus(rad: number): number {
 }
 
 export function Sol() {
-  const pets = useMemo(() => carregarPets(buscarTodas), []);
+  const { buscar } = useCatalogo();
+  const pets = useMemo(() => carregarPets(buscar), [buscar]);
   const [agora, setAgora] = useState(() => new Date());
   const [norte, setNorte] = useState<number | null>(null);
   const [pos, setPos] = useState(FALLBACK);

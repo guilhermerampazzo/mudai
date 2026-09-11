@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { TODAS_PLANTAS, buscarTodas, fotoPlanta, type FichaPlanta } from "../data/plantasIndex";
+import { fotoPlanta, type FichaPlanta } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { identificarServidor, servidorConfigurado } from "../lib/api";
 import { Tabbar, Topbar, GaugeAgua, GaugeSol } from "../components/ui";
 import { Icons } from "../components/icons";
@@ -18,32 +19,40 @@ const PALAVRAS: Record<string, string[]> = {
   cacto: ["cacto", "cactus", "espinho"],
 };
 
-function fichaParaPlanta(f: {
-  slug: string;
-  nomePopular: string;
-  nomeCientifico: string;
-  descricao: string;
-  aguaNivel: number;
-  aguaFreqDias: [number, number];
-  luxMin: number;
-  luxMax: number;
-  tempMin: number;
-  tempMax: number;
-  umidadeMin: number;
-  umidadeMax: number;
-  dificuldade: number;
-  porte: string;
-  toxicaPets: boolean;
-  tags: string[];
-  tagLuz: string;
-  cuidados: { titulo: string; texto: string }[];
-  sinais: { feliz: string[]; estresse: string[] };
-  curiosidades: string[];
-}): FichaPlanta {
-  return { ...f, svg: "epipremnum-aureum.jpg", dificuldade: Math.min(3, Math.max(1, f.dificuldade)) as 1 | 2 | 3 };
+function fichaParaPlanta(
+  f: {
+    slug: string;
+    nomePopular: string;
+    nomeCientifico: string;
+    descricao: string;
+    aguaNivel: number;
+    aguaFreqDias: [number, number];
+    luxMin: number;
+    luxMax: number;
+    tempMin: number;
+    tempMax: number;
+    umidadeMin: number;
+    umidadeMax: number;
+    dificuldade: number;
+    porte: string;
+    toxicaPets: boolean;
+    tags: string[];
+    tagLuz: string;
+    cuidados: { titulo: string; texto: string }[];
+    sinais: { feliz: string[]; estresse: string[] };
+    curiosidades: string[];
+  },
+  fotoServidor?: string
+): FichaPlanta {
+  return {
+    ...f,
+    svg: fotoServidor || "epipremnum-aureum.jpg",
+    dificuldade: Math.min(3, Math.max(1, f.dificuldade)) as 1 | 2 | 3,
+  };
 }
 
 export function Identificar() {
+  const { plantas, buscar, recarregar } = useCatalogo();
   const [etapa, setEtapa] = useState<Etapa>("pronto");
   const [previa, setPrevia] = useState<string | null>(null);
   const [resultado, setResultado] = useState<{ planta: FichaPlanta; confianca: number; cache: boolean; origem: "ia" | "local" } | null>(null);
@@ -59,9 +68,10 @@ export function Identificar() {
     if (servidorConfigurado()) {
       identificarServidor(file)
         .then((r) => {
-          const ficha = fichaParaPlanta(r.ficha);
-          const local = buscarTodas(r.ficha.slug);
-          finalizar(local ?? ficha, r.ficha.confianca, r.cache, "ia");
+          recarregar();
+          const local = buscar(r.ficha.slug);
+          const ficha = local ?? fichaParaPlanta(r.ficha, r.arquivoUrl);
+          finalizar(ficha, r.ficha.confianca, r.cache, "ia");
         })
         .catch(() => identificarLocal(file.name.toLowerCase(), url));
       return;
@@ -72,13 +82,15 @@ export function Identificar() {
   const identificarLocal = (nomeArquivo: string, url: string) => {
     if (memoria.has(nomeArquivo)) {
       const slug = memoria.get(nomeArquivo)!;
-      const planta = buscarTodas(slug)!;
-      finalizar(planta, 97, true, "local");
-      return;
+      const planta = buscar(slug);
+      if (planta) {
+        finalizar(planta, 97, true, "local");
+        return;
+      }
     }
-    let melhor = TODAS_PLANTAS[3];
+    let melhor = plantas[3] ?? plantas[0];
     let melhorScore = 40;
-    for (const p of TODAS_PLANTAS) {
+    for (const p of plantas) {
       const palavras = PALAVRAS[p.slug] ?? [p.nomePopular.toLowerCase()];
       const score = palavras.some((w) => nomeArquivo.includes(w)) ? 96 : 30 + Math.floor(Math.random() * 20);
       if (score > melhorScore) { melhorScore = score; melhor = p; }
@@ -89,7 +101,7 @@ export function Identificar() {
       const cache = raw ? JSON.parse(raw) : {};
       const doCache = cache[nomeArquivo];
       if (doCache) {
-        const planta = buscarTodas(doCache) ?? melhor;
+        const planta = buscar(doCache) ?? melhor;
         finalizar(planta, 96, true, "local");
         return;
       }
@@ -103,9 +115,7 @@ export function Identificar() {
   const finalizar = (planta: FichaPlanta, confianca: number, cache: boolean, origem: "ia" | "local") => {
     setResultado({ planta, confianca, cache, origem });
     setTop3(
-      TODAS_PLANTAS.filter((p) => p.slug !== planta.slug)
-        .slice(0, 2)
-        .map((p, i) => ({ planta: p, confianca: 71 - i * 18 }))
+      plantas.filter((p) => p.slug !== planta.slug).slice(0, 2).map((p, i) => ({ planta: p, confianca: 71 - i * 18 }))
     );
     setEtapa("resultado");
   };

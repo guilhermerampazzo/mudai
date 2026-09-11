@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Capacitor } from "@capacitor/core";
-import { buscarTodas } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { carregarPets } from "../lib/pets";
 import { estatisticas, faixaLux, simularLux, type AmostraLux } from "../lib/lux";
 import { LightSensor } from "../lib/lightSensor";
@@ -10,7 +10,8 @@ import { Icons } from "../components/icons";
 type Fonte = "sensor" | "simulado";
 
 export function Medidor({ onSalvar }: { onSalvar: () => void }) {
-  const pets = useMemo(() => carregarPets(buscarTodas), []);
+  const { buscar } = useCatalogo();
+  const pets = useMemo(() => carregarPets(buscar), [buscar]);
   const [petId, setPetId] = useState(pets[0]?.id ?? "");
   const [amostras, setAmostras] = useState<AmostraLux[]>([]);
   const [congelado, setCongelado] = useState(false);

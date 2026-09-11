@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { TODAS_PLANTAS, fotoPlanta } from "../data/plantasIndex";
+import { fotoPlanta } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { IconBtn } from "../components/ui";
 import { Icons } from "../components/icons";
 
 export function NovoPet({ onAdotar }: { onAdotar: () => void }) {
+  const { plantas } = useCatalogo();
   const [apelido, setApelido] = useState("");
-  const [slug, setSlug] = useState(TODAS_PLANTAS[0].slug);
+  const [slug, setSlug] = useState(plantas[0]?.slug ?? "");
   const [local, setLocal] = useState("Sala");
-  const planta = TODAS_PLANTAS.find((p) => p.slug === slug)!;
+  const planta = plantas.find((p) => p.slug === slug) ?? plantas[0];
   const locais = ["Sala", "Janela", "Quarto", "Varanda", "Banheiro"];
 
   const adotar = () => {
@@ -49,7 +51,7 @@ export function NovoPet({ onAdotar }: { onAdotar: () => void }) {
           </div>
           <div className="field"><label>Espécie</label>
             <select value={slug} onChange={(e) => setSlug(e.target.value)}>
-              {TODAS_PLANTAS.map((p) => <option key={p.slug} value={p.slug}>{p.nomePopular} ({p.nomeCientifico})</option>)}
+              {plantas.map((p) => <option key={p.slug} value={p.slug}>{p.nomePopular} ({p.nomeCientifico})</option>)}
             </select>
           </div>
           <div className="field"><label>Onde ela fica?</label>

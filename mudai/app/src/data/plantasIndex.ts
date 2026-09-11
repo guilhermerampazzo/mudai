@@ -1,3 +1,4 @@
+import { urlFoto } from "../lib/api";
 import { PLANTAS, TAG_FILTROS, filtrarPlantas, buscarPlanta, type FichaPlanta } from "./plantas";
 import { PLANTAS_9_200, type FichaLite } from "./plantas200";
 
@@ -61,7 +62,7 @@ const COMPLETO: FichaPlanta[] = [...PLANTAS, ...PLANTAS_9_200.map(liteParaFicha)
 export const TODAS_PLANTAS = COMPLETO;
 
 export function fotoPlanta(svg: string): string {
-  return svg.endsWith(".jpg") ? `/plantas/${svg}` : `/plantas/${svg}`;
+  return urlFoto(svg);
 }
 
 export function filtrarTodas(filtro: string): FichaPlanta[] {

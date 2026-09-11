@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { buscarTodas, fotoPlanta } from "../data/plantasIndex";
+import { fotoPlanta } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { GaugeAgua, GaugeSol, IconBtn } from "../components/ui";
 import { Icons } from "../components/icons";
 
@@ -7,7 +8,8 @@ const DIFICULDADE = ["", "Iniciante", "Intermediário", "Avançado"];
 
 export function FichaPlanta() {
   const { slug } = useParams();
-  const p = slug ? buscarTodas(slug) : undefined;
+  const { buscar } = useCatalogo();
+  const p = slug ? buscar(slug) : undefined;
   if (!p) {
     return (
       <div className="phone"><div className="screen"><div className="pad">

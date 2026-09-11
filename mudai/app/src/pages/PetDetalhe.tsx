@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { buscarTodas, fotoPlanta } from "../data/plantasIndex";
+import { fotoPlanta } from "../data/plantasIndex";
+import { useCatalogo } from "../lib/catalogo";
 import { carregarPets, salvarPets, scoreSaude, estadoPet, dicaPet } from "../lib/pets";
 import { IconBtn } from "../components/ui";
 import { Icons } from "../components/icons";
 
 export function PetDetalhe({ onChange }: { onChange?: () => void }) {
   const { id } = useParams();
-  const pets = useMemo(() => carregarPets(buscarTodas), []);
+  const { buscar } = useCatalogo();
+  const pets = useMemo(() => carregarPets(buscar), [buscar]);
   const [, setTick] = useState(0);
   const pet = pets.find((p) => p.id === id);
   if (!pet) {

@@ -29,8 +29,9 @@ mudai/app/android/app/src/main/res/xml/config.xml
 # Ambiente Android local (JDK + SDK baixados nesta máquina)
 env-android/
 
-# Ferramentas locais do agente
+# Ferramentas locais do agente / operação (podem conter credenciais)
 .commandcode/
+.vps/
 
 # Entregáveis e temporários
 mudai/entrega/
