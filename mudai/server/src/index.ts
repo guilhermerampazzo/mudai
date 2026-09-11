@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import multipart from "@fastify/multipart";
 import fastifyStatic from "@fastify/static";
 import { createHash, randomUUID } from "node:crypto";
@@ -36,6 +37,16 @@ const ADMIN_TOKEN = process.env.ADMIN_TOKEN ?? "";
 const catalogo = new Catalogo(STORAGE_DIR);
 
 const app = Fastify({ logger: true });
+
+// O app roda em WebView (origens capacitor://localhost, https://localhost,
+// http://localhost) e o painel roda no domínio — todos cross-origin.
+await app.register(cors, {
+  origin: true,
+  methods: ["GET", "POST", "DELETE", "OPTIONS"],
+  allowedHeaders: ["content-type", "x-admin-token"],
+  maxAge: 86400,
+});
+
 await app.register(multipart, {
   limits: { fileSize: Number(process.env.MAX_UPLOAD_MB ?? 20) * 1024 * 1024, files: 1 },
 });
