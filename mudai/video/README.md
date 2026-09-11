@@ -7,17 +7,34 @@ Campanha de 24 segundos, formato vertical, foco em conversão (fazer baixar).
 ```
 video/
   README.md                 este arquivo (leia primeiro)
-  prompts-para-colar.txt    os 3 prompts prontos, em texto limpo, para o Flow
+  prompts-para-colar.txt    os 3 prompts prontos + qual imagem subir em cada bloco
   roteiro-8s.md             3 blocos de 8s explicados (funciona no Veo e no Seedance)
   roteiro-24s.md            1 geração de 24s (só funciona no Seedance 2.5)
+  logo/                     a marca em SVG (fonte) e PNG em alta para subir no Flow
   telas/                    8 prints reais do app, prontos para usar
   telas/_capturadas.json    lista das telas
 ```
 
-**Vai gerar no Flow? Use o `prompts-para-colar.txt`.** Ele tem só o texto dos
-prompts, sem markdown — é só copiar e colar. Os `.md` explicam o raciocínio de
-cada bloco, mas não devem ser colados no Flow (o campo lá é texto puro, então
-`#`, `**` e tabelas viram lixo dentro do prompt).
+**Vai gerar no Flow? Use o `prompts-para-colar.txt`.** Ele tem o texto dos
+prompts e diz qual imagem subir em cada bloco. Os `.md` explicam o raciocínio,
+mas não devem ser colados no Flow (o campo lá é texto puro, então `#`, `**` e
+tabelas viram lixo dentro do prompt).
+
+### Qual imagem subir em cada bloco
+
+| Bloco | Imagem | Por quê |
+|---|---|---|
+| 1 — a marca nascendo | `logo/icone-fundo-transparente.png` | a marca do vídeo tem que ser a sua, senão a IA inventa uma planta qualquer |
+| 2 — a pétala voando | `logo/icone-fundo-transparente.png` | a pétala se solta dessa marca, então o modelo precisa conhecê-la |
+| 3 — painéis do app | **nenhuma** | os painéis saem vazios e as telas reais entram na edição |
+
+Use sempre o **PNG**. O Flow não aceita SVG — os `.svg` na pasta `logo/` são a
+fonte, para reeditar a marca se precisar. Depois de editar, rode
+`node scripts/preparar-logo.mjs` (na pasta `app/`) para gerar os PNGs de novo.
+
+A pasta `logo/` tem quatro PNGs: a marca sozinha e a marca com o nome escrito
+(`logo-completa`), cada uma com fundo verde e com fundo transparente. Para o
+vídeo, use a **marca sozinha com fundo transparente**.
 
 ## Antes de gastar crédito: o limite de cada ferramenta
 
