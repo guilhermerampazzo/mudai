@@ -10,8 +10,9 @@ import { Icons } from "../components/icons";
 
 const FALLBACK = { lat: -23.5558, lng: -46.6396, nome: "São Paulo" };
 
-function graus(rad: number): number {
-  return ((rad * 180) / Math.PI + 360) % 360;
+/** Normaliza um ângulo em graus para a faixa 0–360. */
+function normalizar(graus: number): number {
+  return ((graus % 360) + 360) % 360;
 }
 
 export function Sol() {
@@ -78,8 +79,9 @@ export function Sol() {
   }, []);
 
   const sc = SunCalc.getPosition(agora, pos.lat, pos.lng);
-  const azimute = graus(sc.azimuth + Math.PI);
-  const elevacao = ((sc as unknown as { altitude: number }).altitude * 180) / Math.PI;
+  // O suncalc 2.x já devolve os dois em graus, e o azimute a partir do norte.
+  const azimute = normalizar(sc.azimuth);
+  const elevacao = sc.altitude;
   const solAcima = elevacao > 0;
   const horas = SunCalc.getTimes(agora, pos.lat, pos.lng);
   const nascer = horas.sunrise ?? new Date(agora.getTime() - 6 * 3600e3);
