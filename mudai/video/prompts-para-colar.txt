@@ -1,0 +1,85 @@
+====================================================
+  MUDAÍ — PROMPTS PRONTOS PARA COLAR NO FLOW
+====================================================
+
+COMO USAR
+  1. No Flow, escolha o modelo Veo 3.1 e o formato VERTICAL (9:16).
+  2. Duração: 8 segundos.
+  3. Copie UM prompt abaixo (do traço ao traço) e cole no campo de texto.
+  4. Gere. Se não ficar bom, gere de novo — não mexa no prompt de primeira.
+
+  Não cole os traços nem os títulos. Só o texto de dentro.
+
+DICAS QUE ECONOMIZAM CRÉDITO
+  - Não escreva duração no prompt: quem manda é o campo de duração do Flow.
+  - Se aparecer letra embaralhada, o problema quase sempre é o modelo tentando
+    "inventar" texto. Os prompts abaixo já pedem para não gerar texto nenhum.
+  - Gere os 3 blocos e só depois julgue. Eles só fazem sentido juntos.
+
+
+----------------------------------------------------
+BLOCO 1 — A MARCA NASCENDO (0s a 8s)
+----------------------------------------------------
+
+Locked centered macro shot of an abstract geometric plant mark forming out of light. A single tiny white point of light falls slowly from the top of the frame and lands in the center. From it a thin white stem grows upward, curving like a seedling reaching for light. Four white geometric leaves unfurl one by one, each rotating smoothly into position, settling into a symmetrical abstract plant mark.
+
+Deep solid dark green background (#1b4332), flat 2D vector style, minimal, generous negative space, premium and calm. Smooth confident easing throughout.
+
+Audio: a soft low ambient tone rising gently, ending with one clean bright chime as the mark locks into place.
+
+No text, no letters, no words, no logos, no realistic plants, no people, no extra objects. Pure geometric shapes only. One continuous shot, no cuts.
+
+----------------------------------------------------
+BLOCO 2 — A PÉTALA VOANDO (8s a 16s)
+----------------------------------------------------
+
+Fixed camera on an abstract geometric plant mark, then a single white petal detaches from it and falls in slow motion, spinning gently. Halfway down it accelerates hard directly toward the camera and grows enormous, filling the entire frame with heavy motion blur. Mustard yellow (#e9b44c) light streaks trail behind it. The petal washes past the lens and the frame fills completely with soft white light.
+
+Deep solid dark green background (#1b4332), flat 2D vector style, minimal and premium. Strong speed ramp: elegant and slow first, then sudden fast rush.
+
+Audio: quiet at the start, then a long rising whoosh that follows the petal, ending on a deep impact as it fills the frame.
+
+No text, no letters, no words, no logos, no realistic plants, no people. Pure geometric shapes only. One continuous shot, no cuts.
+
+----------------------------------------------------
+BLOCO 3 — OS PAINÉIS DO APP (16s a 24s)
+----------------------------------------------------
+
+Slow drifting camera in a deep green space. Four tall rectangular glass panels shaped like phone screens float into the frame one at a time, slightly angled in 3D space, with soft drop shadows and subtle light reflections on their frosted surfaces. They settle into a loose overlapping arrangement. A soft mustard yellow (#e9b44c) light sweep passes across them. Then all panels drift away off-frame and the composition clears to the center, leaving a soft radial glow that holds steady.
+
+Deep solid dark green background (#1b4332), premium clean minimal style, generous negative space.
+
+Audio: soft glass chimes as each panel arrives, a gentle rising sweep of light, ending on one clean warm chord.
+
+The glass panels are completely empty and frosted. No interface, no icons, no buttons, no text, no letters, no words, no logos, no people. Pure geometric shapes only. One continuous shot, no cuts.
+
+
+----------------------------------------------------
+DEPOIS DE GERAR OS 3
+----------------------------------------------------
+
+1. Junte os 3 clipes na ordem, na linha do tempo.
+2. Nos cortes (8s e 16s), encaixe o corte no pico da batida.
+3. No bloco 3, sobreponha as telas reais, ~1 segundo cada:
+     ../telas/04-identificar.png
+     ../telas/05-chat-hachimi.png
+     ../telas/07-minhas-plantas.png
+     ../telas/03-medidor-luz.png   (veja a nota no README sobre esta)
+4. No fim, sobreponha a marca e escreva: Baixe grátis
+5. Exporte 1080x1920.
+
+----------------------------------------------------
+SE ALGO DER ERRADO
+----------------------------------------------------
+
+Marca virou planta realista?
+  Acrescente no fim: "abstract geometric shapes only, not a real plant"
+
+Pétala sem impacto?
+  Acrescente: "extreme speed ramp, heavy motion blur, fills the frame"
+
+Apareceu texto embaralhado?
+  Reforce no fim: "no text, no letters, no words, no captions"
+
+Movimento travado ou parado?
+  Acrescente: "smooth continuous motion throughout"

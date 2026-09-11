@@ -6,12 +6,18 @@ Campanha de 24 segundos, formato vertical, foco em conversão (fazer baixar).
 
 ```
 video/
-  README.md         este arquivo (leia primeiro)
-  roteiro-8s.md     3 blocos de 8s — funciona no Veo e no Seedance
-  roteiro-24s.md     1 geração de 24s — só funciona no Seedance 2.5
-  telas/             8 prints reais do app, prontos para usar
-  telas/_capturadas.json   lista das telas
+  README.md                 este arquivo (leia primeiro)
+  prompts-para-colar.txt    os 3 prompts prontos, em texto limpo, para o Flow
+  roteiro-8s.md             3 blocos de 8s explicados (funciona no Veo e no Seedance)
+  roteiro-24s.md            1 geração de 24s (só funciona no Seedance 2.5)
+  telas/                    8 prints reais do app, prontos para usar
+  telas/_capturadas.json    lista das telas
 ```
+
+**Vai gerar no Flow? Use o `prompts-para-colar.txt`.** Ele tem só o texto dos
+prompts, sem markdown — é só copiar e colar. Os `.md` explicam o raciocínio de
+cada bloco, mas não devem ser colados no Flow (o campo lá é texto puro, então
+`#`, `**` e tabelas viram lixo dentro do prompt).
 
 ## Antes de gastar crédito: o limite de cada ferramenta
 
