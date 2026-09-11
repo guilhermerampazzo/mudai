@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { TODAS_PLANTAS, type FichaPlanta } from "../data/plantasIndex";
-import { BASE_API, servidorConfigurado } from "./api";
+import { BASE_API, definirVersaoCatalogo, servidorConfigurado } from "./api";
 
 const CHAVE = "mudai:catalogo:v2";
 
@@ -41,7 +41,12 @@ function gravarCache(versao: string, plantas: FichaPlanta[]): void {
 }
 
 export function CatalogoProvider({ children }: { children: React.ReactNode }) {
-  const cache = useMemo(lerCache, []);
+  const cache = useMemo(() => {
+    const lido = lerCache();
+    // Já abre com a versão certa, para as fotos do cache também furar o CDN.
+    if (lido) definirVersaoCatalogo(lido.versao);
+    return lido;
+  }, []);
   const [plantas, setPlantas] = useState<FichaPlanta[]>(cache?.plantas ?? TODAS_PLANTAS);
   const [origem, setOrigem] = useState<"servidor" | "local">(cache ? "servidor" : "local");
   const [carregando, setCarregando] = useState(servidorConfigurado());
@@ -63,6 +68,8 @@ export function CatalogoProvider({ children }: { children: React.ReactNode }) {
       })
       .then((dados) => {
         if (!ativo || !Array.isArray(dados.plantas) || dados.plantas.length === 0) return;
+        // Fura o cache do CDN quando uma foto é trocada mantendo o nome.
+        definirVersaoCatalogo(dados.versao);
         // O servidor usa "foto"; o app trabalha com "svg" em todas as telas.
         const normalizadas = dados.plantas.map((p) => ({
           ...p,

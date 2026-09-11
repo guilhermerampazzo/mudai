@@ -78,14 +78,26 @@ export class ErroAPI extends Error {
 /* ------------------------- foto ------------------------- */
 
 /**
+ * Versão do catálogo, usada para furar cache de foto.
+ * Quando uma planta é editada e a foto trocada mantendo o mesmo nome,
+ * o CDN continuaria servindo a antiga por semanas sem isso.
+ */
+let versaoCatalogo = "";
+
+export function definirVersaoCatalogo(versao: string): void {
+  versaoCatalogo = String(versao).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
+}
+
+/**
  * Resolve o endereço da foto de uma planta.
  * Foto empacotada no app vem dos assets; foto enviada ao servidor vem do domínio.
  */
 export function urlFoto(foto: string): string {
   if (!foto) return "";
+  const sufixo = versaoCatalogo ? `?v=${versaoCatalogo}` : "";
   if (/^https?:\/\//i.test(foto)) return foto;
-  if (foto.startsWith("/")) return `${BASE}${foto}`;
-  return `${BASE}/plantas/${foto}`;
+  if (foto.startsWith("/")) return `${BASE}${foto}${sufixo}`;
+  return `${BASE}/plantas/${foto}${sufixo}`;
 }
 
 export function servidorConfigurado(): boolean {
