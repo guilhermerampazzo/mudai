@@ -1,69 +1,126 @@
-# Mudaí — README do MVP
+# Mudaí
+
+App Android de cuidados com plantas, com um jardineiro de IA. Monorepo com o
+aplicativo (React + Capacitor), a API (Node) e a infraestrutura de deploy
+(Docker Compose com uma única porta externa).
+
+> Nome: **Mudaí** — trocadilho BR de "mudinha" com "muda aí".
+
+## Módulos
+
+| Módulo | O que faz |
+|---|---|
+| Dicas de planta | Catálogo de 200 plantas de casa com foto, tags de luz/água e ficha com gráficos |
+| Medidor de luz | Lux real pelo sensor do aparelho, com pico/máx/mín/média e diagnóstico por planta |
+| Identificar | Foto da planta → IA identifica, mostra as parecidas e devolve a ficha, com cache |
+| Hachimi | Chat com IA restrito a plantas e luz — fala como jardineiro, nunca como IA |
+| Posição do sol | Bússola solar com GPS real: azimute, elevação e arco do dia |
+| Minhas plantas | Cada planta vira um pet com score de saúde (luz + rega + clima) e lembrete de rega |
 
 ## Estrutura
 
 ```
 mudai/
-  app/        React + TS + Vite + Capacitor (telas do MVP)
-  server/     Node Fastify — /api/v1/identificar, /api/v1/chat, /api/v1/plantas
-  docker/     Dockerfiles api/web/gateway
-  docker-compose.yml   1 porta externa: 127.0.0.1:10233
-  .env.example
+  app/      React + TS + Vite + Capacitor (Android)
+    src/pages/      Descobrir, FichaPlanta, Medidor, Identificar, Chat, Sol, Pets, Entrar, Admin
+    src/data/       catálogo embutido (fallback offline)
+    src/lib/        api, conta, catálogo, pets, notificações, botão voltar
+    public/plantas/ 200 fotos locais (nenhuma imagem remota)
+    android/        projeto nativo + plugin de sensor de luz
+    scripts/        baixar fotos, gerar ícones, gerar seed
+  server/   Node 20 + Fastify
+    src/catalogo.ts catálogo em JSON no volume, editável pelo painel
+    src/contas.ts   contas, códigos de verificação e limites de uso
+    src/email.ts    envio de código pelo Resend
+    src/estilo.ts   guia de escrita natural aplicado aos textos da IA
+  docker/   Dockerfiles (api, web) e nginx do gateway
+design/     telas de referência em HTML (fonte do visual)
+logo/       marca em SVG (origem dos ícones do app)
+plano.md    especificação do produto
 ```
 
-## Rodar o app (web, dev)
+## Contas, limites e notificações
+
+O app funciona sem conta: dá pra navegar no catálogo, ver fichas, medir luz e usar
+a bússola do sol. Para cadastrar planta, conversar com o Hachimi ou identificar
+por foto, o app pede uma conta. Sem senha: chega um código de 6 dígitos por e-mail.
+
+Limites por conta (configuráveis no `.env`):
+
+| Uso | Limite |
+|---|---|
+| Conversa com o Hachimi | 10 por dia e 50 por semana |
+| Identificação por foto | 20 por semana |
+
+Os lembretes de rega usam notificação local do aparelho, agendados no ritmo de
+cada planta: a que pede água a cada 2 dias recebe aviso a cada 2 dias.
+
+## Rodar o app em desenvolvimento
 
 ```bash
 cd mudai/app
-npm install --include=dev
-npm run dev     # http://localhost:5173
+npm install
+npm run dev          # http://localhost:5173
 ```
 
-## Rodar o servidor (dev, sem docker)
+## Rodar a API em desenvolvimento
 
 ```bash
 cd mudai/server
-npm install --include=dev
-cp ../.env.example ../.env   # ou crie o .env e preencha AI_*
-PORT=4001 STORAGE_DIR=E:\coder\app-planta-storage node node_modules/tsx/dist/cli.mjs src/index.ts
-curl http://127.0.0.1:4001/health   # {"ok":true,"ia":false}
+npm install
+cp ../.env.example ../.env    # preencha AI_API_KEY e RESEND_API_KEY
+PORT=4001 STORAGE_DIR=./storage-dev npx tsx src/index.ts
+curl http://127.0.0.1:4001/health
 ```
 
-O app usa `vite proxy` (/api → :4000) em dev. Sem chave de IA, o servidor responde
-`503 IA_INDISPONIVEL`; o app segue 100% funcional offline (catálogo, pets, medidor
-simulado, chat local do Hachimi, bússola com GPS fixo SP).
+Sem chave de IA a API responde 503, e o app continua utilizável: cai sozinho nas
+respostas locais.
 
-## Subir tudo (produção, 1 porta)
+## Deploy (produção)
+
+Uma única porta externa: `127.0.0.1:10233`. O domínio é servido por um reverse
+proxy (aaPanel) que aponta para essa porta.
 
 ```bash
 cd mudai
-cp .env.example .env   # preencher AI_BASE_URL / AI_API_KEY (Command Code, deepseek v4 flash vision)
+cp .env.example .env     # preencha as chaves e troque as senhas
 docker compose up -d --build
-curl http://127.0.0.1:10233/healthz
+curl http://127.0.0.1:10233/health
 ```
 
-## Gerar o APK (Android)
+Serviços internos (nenhum publica porta): `web` (nginx com o React) e `api`
+(Fastify). O gateway roteia `/` para o web e `/api/` e `/uploads/` para a API.
+
+O painel de plantas fica em `/#/admin` e usa o `ADMIN_TOKEN` do `.env`.
+
+## Gerar o APK
 
 ```bash
 cd mudai/app
 npm run build
-node node_modules/@capacitor/cli/bin/capacitor sync android
-# abrir android/ no Android Studio → Build > Build APK
+npx cap sync android
+cd android && ./gradlew assembleDebug
+# saída: android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Permissões já declaradas: câmera, localização, mídia, notificações.
+Precisa de JDK 21 e do Android SDK. A URL da API vem de `app/.env.production`.
 
-## Passar a chave no final
+## IA
 
-Preencha no `.env`: `AI_BASE_URL`, `AI_API_KEY`, `AI_CHAT_MODEL`, `AI_VISION_MODEL`.
-Sem trocar código — a camada é OpenAI-compatible.
+Camada compatível com a API OpenAI (`AI_BASE_URL` + `AI_API_KEY` + modelo por
+env), então funciona com qualquer provedor compatível sem trocar código.
 
-## Aceite (plano.md §11)
+Como o sistema é gratuito, a conta define os limites de uso — sem conta não há
+chamada de IA.
 
-- [x] Fichas com foto (SVG), tags e gráficos (8 espécies seed; contrato pronto p/ 100)
-- [x] Medidor com lux + pico/máx/mín/média + diagnóstico por pet
-- [x] Identificar: foto → ficha padrão + cache localStorage (server com cache + zod)
-- [x] Hachimi local restrito a planta/luz; server pronto p/ IA real via .env
-- [x] Bússola solar com azimute/elevação reais (suncalc) + giroscópio
-- [x] Score de saúde por lux + rega + temperatura
-- [x] Build web OK; projeto Android gerado (APK via Android Studio)
+## Escrita
+
+Os textos que a IA produz (respostas do Hachimi, descrições e cuidados das fichas)
+seguem um guia de escrita natural em `server/src/estilo.ts`, adaptado do skill
+[humanizer](https://github.com/blader/humanizer) (MIT), que por sua vez parte de
+[Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+da Wikipédia.
+
+## Licença
+
+Uso privado. As fotos do catálogo vêm do Wikimedia Commons.

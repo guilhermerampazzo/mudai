@@ -79,17 +79,18 @@ for (const [dens, fator] of DENSIDADES) {
   const dir = join(res, `mipmap-${dens}`);
   const cheio = Math.round(48 * fator);
   const adaptativo = Math.round(108 * fator);
-  gerados.push(await render(join(dir, "ic_launcher.png"), cheio, cheio, paginaIcone(cheio, 0.66, 0)));
-  gerados.push(await render(join(dir, "ic_launcher_round.png"), cheio, cheio, paginaIcone(cheio, 0.6, cheio / 2)));
-  gerados.push(await render(join(dir, "ic_launcher_foreground.png"), adaptativo, adaptativo, paginaIcone(adaptativo, 0.62, 0)));
+  // Marca ~30% menor que antes: sobra respiro verde em volta.
+  gerados.push(await render(join(dir, "ic_launcher.png"), cheio, cheio, paginaIcone(cheio, 0.46, 0)));
+  gerados.push(await render(join(dir, "ic_launcher_round.png"), cheio, cheio, paginaIcone(cheio, 0.42, cheio / 2)));
+  gerados.push(await render(join(dir, "ic_launcher_foreground.png"), adaptativo, adaptativo, paginaIcone(adaptativo, 0.44, 0)));
 }
 
 for (const [dir, largura, altura] of SPLASHES) {
   gerados.push(await render(join(res, dir, "splash.png"), largura, altura, paginaSplash(largura, altura)));
 }
 
-gerados.push(await render(join(RAIZ, "public", "icone-app.png"), 512, 512, paginaIcone(512, 0.66, 0)));
-gerados.push(await render(join(RAIZ, "public", "icone-app-redondo.png"), 512, 512, paginaIcone(512, 0.6, 256)));
+gerados.push(await render(join(RAIZ, "public", "icone-app.png"), 512, 512, paginaIcone(512, 0.46, 0)));
+gerados.push(await render(join(RAIZ, "public", "icone-app-redondo.png"), 512, 512, paginaIcone(512, 0.42, 256)));
 
 await navegador.close();
 console.log("gerados:", gerados.length);
