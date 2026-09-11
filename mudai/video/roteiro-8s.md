@@ -104,6 +104,9 @@ Aqui entra a composição: você cola os prints reais por cima do que a IA gerou
   2. `telas/05-chat-hachimi.png` — o Hachimi respondendo sobre folha amarela
   3. `telas/07-minhas-plantas.png` — Juju 100, Gordinha 59
   4. `telas/03-medidor-luz.png` — 2.385 lux
+     ↳ **capture esta no celular**, não no navegador. No navegador ela mostra
+     "lux · demo" (não tem sensor). No aparelho mostra "lux · real".
+     Alternativa sem esse detalhe: `telas/06-posicao-sol.png`
 - **21,5s–22,5s** — Os painéis saem, a tela limpa com brilho suave ao centro.
 - **22,5s–24,0s** — **Cole a marca Mudaí** no centro e, embaixo, o texto da
   chamada: `Baixe grátis`. Segura até o fim.

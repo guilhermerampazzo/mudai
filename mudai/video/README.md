@@ -68,14 +68,42 @@ um enfeite — assim o vídeo tem uma ideia só, e não vários efeitos soltos.
 | `04-identificar.png` | 1ª tela | É o efeito uau: foto → Costela-de-adão, 98%. Vende sozinho |
 | `05-chat-hachimi.png` | 2ª tela | Mostra conversa de gente real, não robô. É o diferencial |
 | `07-minhas-plantas.png` | 3ª tela | Puxa o emocional: suas plantas como pets, com nota de saúde |
-| `03-medidor-luz.png` | 4ª tela | Prova que é útil de verdade: 2.385 lux na tela |
-| `06-posicao-sol.png` | reserva | Se sobrar tempo ou quiser trocar a do medidor |
+| `03-medidor-luz.png` | 4ª tela | Prova que é útil de verdade: 2.385 lux na tela ⚠️ veja abaixo |
+| `06-posicao-sol.png` | reserva | Bússola solar com azimute e elevação reais |
 | `01-descobrir.png` | reserva | 200 plantas — bom para falar de variedade |
 | `02-ficha-planta.png` | reserva | Ficha completa com os gráficos |
 | `00-boas-vindas.png` | reserva | Abertura do app, se quiser outro começo |
 
 Todas são print real, 1170x2532 (3x), já com os dados verdadeiros: a Juju com
-saúde 100, a Gordinha com 59, o Hachimi respondendo sobre folha amarela.
+saúde 100, a Gordinha com 59, o Hachimi respondendo sobre folha amarela e a
+identificação acertando a Espada-de-são-jorge com 88%.
+
+Para recapturar (depois de mudar algo no app):
+
+```bash
+cd mudai/app
+set NODE_ENV=development
+set MUDAI_SESSAO=<token-de-sessão>
+node scripts/capturar-telas.mjs
+```
+
+O script pega os dados reais de produção e injeta as três plantas (Juju,
+Gordinha e Zazá) antes de fotografar, para nenhuma tela aparecer vazia.
+
+### ⚠️ A tela do medidor precisa ser recapturada no celular
+
+`03-medidor-luz.png` foi capturada no navegador, que **não tem sensor de luz**.
+Por isso ela mostra `lux · demo` e o aviso "Aguardando sensor… (demonstração)".
+
+Isso é de propósito: o app avisa quando o número não veio do hardware, em vez de
+mostrar valor inventado como se fosse real. Nada de errado com o app — mas em
+propaganda não pega bem.
+
+**Como resolver:** abra o app no celular (que tem sensor), vá em Medidor de Luz e
+tire print do aparelho. O texto vira `lux · real`. Se não der, use
+`06-posicao-sol.png` no lugar dela — é igualmente visual e não tem esse aviso.
+
+
 
 ## Trilha e som
 

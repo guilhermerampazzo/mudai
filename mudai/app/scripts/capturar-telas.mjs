@@ -29,6 +29,10 @@ const CONTEXTO = {
   permissions: ["geolocation"],
 };
 
+// Foto usada na tela de identificação. Precisa ser uma que ainda não foi
+// identificada, senão o app mostra "JÁ IDENTIFICADA" em vez da confiança.
+const FOTO_IDENTIFICAR = process.env.MUDAI_FOTO ?? "spathiphyllum-wallisii.jpg";
+
 // Plantas do catálogo para a tela "Minhas plantas".
 const PETS = [
   { id: "pet-juju", apelido: "Juju", slug: "jiboia", local: "Sala", ultimaRegaDias: 2, ultimoLux: 2400, tempAmbiente: 24 },
@@ -42,6 +46,10 @@ async function nova() {
   const nav = await chromium.launch();
   const ctx = await nav.newContext(CONTEXTO);
   const pag = await ctx.newPage();
+  // Plantas e sessão entram em todas as telas, para nenhuma aparecer vazia.
+  await pag.addInitScript((pets) => {
+    window.localStorage.setItem("mudai:pets:v2", JSON.stringify(pets));
+  }, PETS);
   if (SESSAO) {
     await pag.addInitScript((t) => window.localStorage.setItem("mudai:sessao", t), SESSAO);
   }
@@ -96,11 +104,7 @@ if (SESSAO) {
   const { nav, pag } = await nova();
   console.log("Telas com conta:");
 
-  // Minhas plantas: injeta as plantas antes de abrir.
-  await pag.addInitScript((pets) => {
-    const leves = pets.map((p) => ({ ...p, planta: undefined }));
-    window.localStorage.setItem("mudai:pets:v2", JSON.stringify(leves));
-  }, PETS);
+  // Minhas plantas: as plantas já entram pelo init do contexto.
   await pag.goto(`${BASE}/#/pets`, { waitUntil: "networkidle" });
   await pag.waitForTimeout(4000);
   await tirar(pag, "07-minhas-plantas");
@@ -123,15 +127,17 @@ if (SESSAO) {
   }
 
   // Identificar: sobe uma foto e espera o resultado.
+  // Usa uma foto ainda não identificada, para aparecer a confiança
+  // ("IDENTIFICADA · 97%") em vez de "JÁ IDENTIFICADA".
   {
     const { nav, pag } = await nova();
     await pag.goto(`${BASE}/#/identificar`, { waitUntil: "networkidle" });
     await pag.waitForTimeout(2500);
     const entrada = await pag.$("input[type='file']");
     if (entrada) {
-      await entrada.setInputFiles(join(RAIZ, "public", "plantas", "monstera-deliciosa.jpg"));
+      await entrada.setInputFiles(join(RAIZ, "public", "plantas", FOTO_IDENTIFICAR));
       console.log("  aguardando a identificação…");
-      await pag.waitForTimeout(60000);
+      await pag.waitForTimeout(70000);
     }
     await tirar(pag, "04-identificar");
     await nav.close();

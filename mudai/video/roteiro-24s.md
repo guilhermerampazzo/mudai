@@ -23,7 +23,7 @@ continuidade que os blocos separados não conseguem.
 | **8,0s–11,0s** | A pétala acelera e vem na direção da câmera, crescendo, com rastro mostarda. |
 | **11,0s–12,0s** | Ela preenche a tela inteira, desfocada pelo movimento, e o quadro vira luz branca. |
 | **12,0s–16,0s** | A luz se abre em quatro painéis de vidro (formato celular) que flutuam para dentro. |
-| **16,0s–21,0s** | **Cole as telas reais** aqui, uma por painel: identificar, chat, minhas plantas, medidor. |
+| **16,0s–21,0s** | **Cole as telas reais** aqui, uma por painel: identificar, chat, minhas plantas, medidor (veja a nota no `README.md` sobre a do medidor). |
 | **21,0s–22,5s** | Os painéis saem flutuando. O quadro limpa para o centro. |
 | **22,5s–24,0s** | **Cole a marca** no centro e `Baixe grátis` embaixo. Segura até o fim. |
 
