@@ -81,8 +81,14 @@ export class ErroAPI extends Error {
  * Versão do catálogo, usada para furar cache de foto.
  * Quando uma planta é editada e a foto trocada mantendo o mesmo nome,
  * o CDN continuaria servindo a antiga por semanas sem isso.
+ *
+ * Começa com o identificador deste build, então mesmo a primeira tela
+ * (antes do catálogo carregar) já pede a foto com versão.
  */
-let versaoCatalogo = "";
+declare const __ID_BUILD__: string | undefined;
+
+let versaoCatalogo =
+  typeof __ID_BUILD__ === "string" ? __ID_BUILD__.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20) : "";
 
 export function definirVersaoCatalogo(versao: string): void {
   versaoCatalogo = String(versao).replace(/[^a-zA-Z0-9]/g, "").slice(0, 20);
